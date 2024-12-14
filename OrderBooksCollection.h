@@ -1,12 +1,13 @@
 #pragma once
 
 #include "OrderBook.h"
+#include "OrderBookArray.h"
 
 #include <string>
 #include <unordered_map>
 #include <optional>
 
-class OrderBookManager {
+class OrderBooksCollection final {
 public:
 	void initBook(const std::string &symbol,
 	              const Orders& bidsSnapshot,

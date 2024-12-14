@@ -1,7 +1,9 @@
 #include "OrderBook.h"
 
-void OrderBook::initFromSnapshot(const Orders& bidsSnapshot, const Orders& asksSnapshot)
+void OrderBook::initFromSnapshot(std::string_view symbol, const Orders& bidsSnapshot, const Orders& asksSnapshot)
 {
+	pairSymbol = symbol;
+
 	bids.clear();
 	asks.clear();
 	for (const auto &b : bidsSnapshot) {
@@ -38,8 +40,7 @@ void OrderBook::applyUpdates(const Orders& bidUpdates,
 
 std::optional<Order> OrderBook::getBestBid() const {
 	if (bids.empty()) return std::nullopt;
-	auto it = bids.end();
-	--it; // highest price is at the end
+	auto it = bids.begin(); // highest price at the beginning
 	return std::make_pair(it->first, it->second);
 }
 

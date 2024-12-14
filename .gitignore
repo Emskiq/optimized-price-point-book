@@ -2,6 +2,8 @@
 *.o
 *.d
 
+.cache
+
 # Ignore the main executable (if generated in the root directory)
 main
 

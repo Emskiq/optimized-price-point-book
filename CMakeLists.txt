@@ -11,7 +11,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG" CACHE STRING "" FORCE)
 # Sources for the library
 set(LIB_SRCS
     OrderBook.cpp
-    OrderBookManager.cpp
+    OrderBookArray.cpp
+    OrderBooksCollection.cpp
 )
 
 # Create a library from the order book code
