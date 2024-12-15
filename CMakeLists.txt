@@ -8,22 +8,22 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0" CACHE STRING "" FORCE)
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG" CACHE STRING "" FORCE)
 
-# Sources for the library
-set(LIB_SRCS
-    OrderBook.cpp
-    OrderBookArray.cpp
-    OrderBooksCollection.cpp
-)
+# include_directories(src)
+file(GLOB LIB_SRCS src/*.cpp)
 
-# Create a library from the order book code
 add_library(orderbooks_lib ${LIB_SRCS})
 target_include_directories(orderbooks_lib PRIVATE ${CMAKE_SOURCE_DIR})
-# If you need special compile options, add them here:
-# target_compile_options(orderbooks_lib PRIVATE ...)
 
-# Main executable
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE orderbooks_lib)
+# add_executable(${PROJECT_NAME} main.cpp)
+# target_link_libraries(${PROJECT_NAME} PRIVATE orderbooks_lib)
+
+# Executable 2: Benchmark
+add_executable(benchmark bin/Benchmark.cpp)
+target_compile_options(benchmark PRIVATE -O2)
+target_link_libraries(benchmark PRIVATE orderbooks_lib)
+
+# Executable 3: Generation of the data
+add_executable(generate_data bin/GenerateData.cpp)
 
 # Enable testing
 include(CTest)
@@ -41,4 +41,3 @@ add_executable(tests tests/testOrderBook.cpp)
 target_link_libraries(tests PRIVATE gtest_main orderbooks_lib)
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR})
 add_test(NAME unit_tests COMMAND tests)
-

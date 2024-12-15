@@ -17,18 +17,17 @@ using Orders = std::vector<Order>;
 // It stores price levels in sorted order using std::map.
 class OrderBook final {
 public:
-	void initFromSnapshot(const std::string_view symbol, const Orders& bidsSnapshot, const Orders& asksSnapshot);
+	OrderBook(std::string_view symbol) : symbol{symbol}
+	{ }
 
-	void applyUpdates(const Orders& bidUpdates,
-	                  const Orders& askUpdates);
+	void update(const Orders& bidUpdates, const Orders& askUpdates);
 
 	std::optional<Order> getBestBid() const;
 	std::optional<Order> getBestAsk() const;
 
 private:
-	std::string_view pairSymbol;
+	std::string_view const symbol;
 
-	// TODO: Resarch whether simple `std::vector` or `std::map` would be better
 	std::map<Price, Quantity, std::greater<Price>> bids; // buy orders
 	std::map<Price, Quantity, std::less<Price>> asks; // sell orders
 };

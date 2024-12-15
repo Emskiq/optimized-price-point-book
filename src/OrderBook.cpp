@@ -1,25 +1,6 @@
 #include "OrderBook.h"
 
-void OrderBook::initFromSnapshot(std::string_view symbol, const Orders& bidsSnapshot, const Orders& asksSnapshot)
-{
-	pairSymbol = symbol;
-
-	bids.clear();
-	asks.clear();
-	for (const auto &b : bidsSnapshot) {
-		if (b.second > 0) {
-			bids[b.first] = b.second;
-		}
-	}
-	for (const auto &a : asksSnapshot) {
-		if (a.second > 0) {
-			asks[a.first] = a.second;
-		}
-	}
-}
-
-void OrderBook::applyUpdates(const Orders& bidUpdates,
-                             const Orders& askUpdates)
+void OrderBook::update(const Orders& bidUpdates, const Orders& askUpdates)
 {
 	for (const auto &b : bidUpdates) {
 		if (b.second == 0.0) {

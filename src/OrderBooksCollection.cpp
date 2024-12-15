@@ -1,8 +1,8 @@
 #include "OrderBooksCollection.h"
 
-void OrderBooksCollection::initBook(const std::string &symbol, const Orders& bidsSnapshot, const Orders& asksSnapshot)
+void OrderBooksCollection::addSymbol(const std::string& symbol)
 {
-	books[symbol].initFromSnapshot(symbol, bidsSnapshot, asksSnapshot);
+	books.emplace(symbol, OrderBook{symbol});
 }
 
 void OrderBooksCollection::applyEvent(const std::string &symbol, const Orders& bidUpdates, const Orders& askUpdates)
@@ -12,7 +12,7 @@ void OrderBooksCollection::applyEvent(const std::string &symbol, const Orders& b
 		// Symbol not found, optionally handle error or ignore
 		return;
 	}
-	it->second.applyUpdates(bidUpdates, askUpdates);
+	it->second.update(bidUpdates, askUpdates);
 }
 
 std::optional<Order> OrderBooksCollection::getBestBid(const std::string &symbol) const {
