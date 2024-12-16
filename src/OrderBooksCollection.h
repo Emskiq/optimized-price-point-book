@@ -6,6 +6,7 @@
 #include <string>
 #include <unordered_map>
 #include <optional>
+#include <mutex>
 
 class OrderBooksCollection final {
 public:
@@ -16,5 +17,6 @@ public:
 	std::optional<Order> getBestAsk(const std::string &symbol) const;
 
 private:
+	mutable std::mutex mtx;
 	std::unordered_map<std::string, OrderBook> books{};
 };

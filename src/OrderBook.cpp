@@ -21,13 +21,13 @@ void OrderBook::update(const Orders& bidUpdates, const Orders& askUpdates)
 
 std::optional<Order> OrderBook::getBestBid() const {
 	if (bids.empty()) return std::nullopt;
-	auto it = bids.begin(); // highest price at the beginning
+	auto it = bids.begin();
 	return std::make_pair(it->first, it->second);
 }
 
 std::optional<Order> OrderBook::getBestAsk() const {
 	if (asks.empty()) return std::nullopt;
-	auto it = asks.begin(); // lowest price at the beginning
+	auto it = asks.begin();
 	return std::make_pair(it->first, it->second);
 }
 
