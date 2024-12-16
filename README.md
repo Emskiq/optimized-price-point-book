@@ -30,7 +30,7 @@ Two key implementations of the order book were developed:
 
 > [!NOTE]
 > **Personal benchmark results:**<br>
-> Even though I found an [*"article"*](https://quant.stackexchange.com/questions/63140/red-black-trees-for-limit-order-book) stating that the second implementation (fixed array) would be faster, during my testing and benchmarking the results were in favor of the balanced tree. (in terms of time) - for 1 million updates separated by 1000 updates every time.
+> Even though I found an [*"article"*](https://gist.github.com/halfelf/db1ae032dc34278968f8bf31ee999a25) stating that the second implementation (fixed array) would be faster, during my testing and benchmarking the results were in favor of the balanced tree. (in terms of time) - for 1 million updates separated by 1000 updates every time.
 
 ![Benchmark Results of 1 million updates](benchmark-1-million-updates.png)
 
@@ -128,6 +128,8 @@ To build the Docker image locally:
 ```bash
 docker build -t orderbook-app .
 ```
+
+The Docker image for this project is also available on [Docker Hub](https://hub.docker.com/r/emilskiq/orderbook_app).
 
 ### **Run Benchmarks Inside Docker**
 
