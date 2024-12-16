@@ -4,7 +4,7 @@
 ## **Task Overview**
 
 The goal of this project is to efficiently maintain and benchmark an **order book** data structure. The order book holds buy (bids) and sell (asks) orders at various price levels. The challenge is to achieve **high performance** in terms of:
-- Insertion and removal of orders.
+- Insertion, update and removal of orders.
 - Fetching the best bid (highest buy price) and best ask (lowest sell price).
 
 In order to be capable of handling events from the [Binance book dept stream](https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#diff-depth-stream)
@@ -29,8 +29,8 @@ Two key implementations of the order book were developed:
 
 
 > [!NOTE]
-> **Personal benchmark results**
-> Even though I found a research stating that the second implementation (fixed array) would be faster, during my testing and benchmarking the results were in favor of the balanced tree. (in terms of time) - for 1 million updates separated by 1000 updates every time.
+> **Personal benchmark results:**<br>
+> Even though I found an [*"article"*](https://quant.stackexchange.com/questions/63140/red-black-trees-for-limit-order-book) stating that the second implementation (fixed array) would be faster, during my testing and benchmarking the results were in favor of the balanced tree. (in terms of time) - for 1 million updates separated by 1000 updates every time.
 
 ![Benchmark Results of 1 million updates](benchmark-1-million-updates.png)
 
