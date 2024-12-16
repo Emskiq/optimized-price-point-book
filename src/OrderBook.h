@@ -7,8 +7,8 @@
 #include <string_view>
 
 // TODO: Rework to convert double to custom integer type
-using Price = double;
-using Quantity = double;
+using Price = long double;
+using Quantity = long double;
 
 using Order = std::pair<Price, Quantity>;
 using Orders = std::vector<Order>;

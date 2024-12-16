@@ -7,8 +7,8 @@
 #include <malloc.h> // For mallinfo
 #include <sys/resource.h>
 
-using Price = double;
-using Quantity = double;
+using Price = long double;
+using Quantity = long double;
 using Order = std::pair<Price, Quantity>;
 using Orders = std::vector<Order>;
 

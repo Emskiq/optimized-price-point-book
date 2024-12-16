@@ -41,15 +41,15 @@ target_link_libraries(benchmark PRIVATE orderbooks_lib)
 
 add_executable(generate_data bin/GenerateData.cpp)
 
-# Binance Listener Executable
 add_executable(binance_listener
     src/BinanceWebSocketListener.cpp
+    src/BinanceSnapshotFetcher.cpp
     bin/BinanceListener.cpp
 )
 
-# Link Boost and OpenSSL for Binance Listener
 target_link_libraries(binance_listener
     OpenSSL::SSL
+    orderbooks_lib
 )
 
 # Enable testing

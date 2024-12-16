@@ -8,8 +8,8 @@
 #include <string_view>
 #include <vector>
 
-using Price = double;
-using Quantity = double;
+using Price = long double;
+using Quantity = long double;
 using Order = std::pair<Price, Quantity>;
 
 using Orders = std::vector<Order>;
