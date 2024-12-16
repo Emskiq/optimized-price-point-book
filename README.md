@@ -1,19 +1,13 @@
-Here’s the updated **README** without the Docker Hub push instructions:
-
----
-
 # **Optimized Price Point Book**
 
-> [!NOTE]  
-> **This project was completed in 3 days as part of an interview task.**
-
----
 
 ## **Task Overview**
 
 The goal of this project is to efficiently maintain and benchmark an **order book** data structure. The order book holds buy (bids) and sell (asks) orders at various price levels. The challenge is to achieve **high performance** in terms of:
 - Insertion and removal of orders.
 - Fetching the best bid (highest buy price) and best ask (lowest sell price).
+
+In order to be capable of handling events from the [Binance book dept stream](https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#diff-depth-stream)
 
 ---
 
@@ -33,10 +27,34 @@ Two key implementations of the order book were developed:
      - **Insertion**: average case O(log N); worst case - O(N)
      - **Lookup for best bid/ask**: O(1)
 
+
+> [!NOTE]
+> **Personal benchmark results**
+> Even though I found a research stating that the second implementation (fixed array) would be faster, during my testing and benchmarking the results were in favor of the balanced tree. (in terms of time) - for 1 million updates separated by 1000 updates every time.
+
+![Benchmark Results of 1 million updates](benchmark-1-million-updates.png)
+
 ### **Benchmarking**
 The performance of both implementations is measured and compared based on:
 - **Memory usage**.
 - **Execution time** for order insertions and queries.
+
+### **Unit Tests for correctness**
+Unit tests are implemented to validate the order book functionality. These include tests for:
+- Correct insertion and deletion of bids/asks.
+- Correct retrieval of the best bid/ask price.
+- Handling of edge cases.
+
+### **Binance WebSocket Listener**
+
+An **out-of-scope implementation** of a WebSocket listener was developed to fetch live order book updates from Binance. The implementation:
+- Fetches the **initial snapshot** using Binance’s REST API.
+- Connects to Binance’s WebSocket stream to process **depth updates** every 100ms.
+- Updates the order book data structure in real time.
+
+##### **Local Build Only**
+The Binance WebSocket listener **works on the local build** but fails in the Docker container due to SSL certificate issues. This needs to be resolved for full Docker compatibility.
+
 
 ---
 
@@ -52,8 +70,8 @@ The performance of both implementations is measured and compared based on:
 1. Clone the repository:
 
    ```bash
-   git clone <repo_url>
-   cd <repo_directory>
+   git clone git@github.com:Emskiq/optimized-price-point-book.git
+   cd optimized-price-point-book
    ```
 
 2. Create a **build directory** and run CMake:
@@ -77,6 +95,8 @@ The performance of both implementations is measured and compared based on:
 ## **How to Run**
 
 ### **Benchmark**
+I have separated the data generation and the actual benchmark in order to have 100% accurate results, since there was a lot of memory consumption in generating 1 million price updates.
+<br>
 To run the benchmark comparing the two implementations:
 
 ```bash
@@ -126,8 +146,11 @@ docker run --rm orderbook-app ./tests
 
 ---
 
-## **TODO**
+## **TODOs and Limitations**
 
 - Finalize the **Binance live connection** (`binance_listener`) for real-time order book updates.
 - Add support for **multiple threads** to process different symbols concurrently.
 - Implement double to integer conversion so the prices can be compared quickly
+- **Binance WebSocket Listener**: Not functional under Docker due to SSL certificate verification failures. It works on the local build.
+- Docker-based benchmarks may show buffered output due to I/O abstraction, but the program runs without issues.
+- Mathc orders and actually do trades - be careful of the [rate limit of binance api points](https://dev.binance.vision/t/request-limit-on-the-api-endpoints/9275) though!
